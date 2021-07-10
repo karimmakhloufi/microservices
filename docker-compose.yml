@@ -1,0 +1,19 @@
+services:
+  gateway:
+    build:
+      context: ./gateway
+    ## you have to manually npm install in each folder for node_modules to work when volumes are activated
+    ## volumes:
+    ##   - ./gateway:/app
+    ports:
+      - 5000:5000
+  wilders:
+    build:
+      context: ./wilders
+    ## volumes:
+    ##  - ./wilders:/app
+  skills:
+    build:
+      context: ./skills
+    ## volumes:
+    ##  - ./skills:/app
