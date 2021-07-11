@@ -2,18 +2,20 @@ services:
   gateway:
     build:
       context: ./gateway
-    ## you have to manually npm install in each folder for node_modules to work when volumes are activated
-    ## volumes:
-    ##   - ./gateway:/app
+    volumes:
+      - ./gateway:/app
+      - /app/node_modules
     ports:
       - 5000:5000
   wilders:
     build:
       context: ./wilders
-    ## volumes:
-    ##  - ./wilders:/app
+    volumes:
+      - ./wilders:/app
+      - /app/node_modules
   skills:
     build:
       context: ./skills
-    ## volumes:
-    ##  - ./skills:/app
+    volumes:
+      - ./skills:/app
+      - /app/node_modules

@@ -1,0 +1,19 @@
+GET http://localhost:5000/wilders HTTP/1.1
+
+###
+POST http://localhost:5000/wilder/ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Alain",
+    "role": "Student"
+}
+
+###
+POST http://localhost:5000/wilder/skills HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Alain",
+    "skills": ["php", "laravel"]
+}

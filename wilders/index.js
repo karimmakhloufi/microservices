@@ -3,6 +3,8 @@ const axios = require("axios");
 const app = express();
 const port = 5000;
 
+app.use(express.json());
+
 const wilders = [
   {
     name: "Karim",
@@ -19,8 +21,10 @@ app.get("/wilders", async (req, res) => {
   } catch (err) {
     console.log("err");
   }
+  console.log("result", result);
   if (skills) {
     result.map((wilder) => {
+      console.log("wilder", wilder);
       const skilledWilder = skills.find(
         (tempSkilledWilder) => tempSkilledWilder.name === wilder.name
       );
@@ -31,6 +35,12 @@ app.get("/wilders", async (req, res) => {
     });
   }
   res.send(result);
+});
+
+app.post("/wilder", (req, res) => {
+  console.log("post wilder", req.body);
+  wilders.push(req.body);
+  res.send("ok");
 });
 
 app.listen(port, () => {
