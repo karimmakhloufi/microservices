@@ -10,19 +10,16 @@ services:
     build:
       context: ./gateway
     volumes:
-      - ./gateway:/app
-      - /app/node_modules
+      - ./gateway/src:/app/src
     ports:
       - 5000:5000
   wilders:
     build:
       context: ./wilders
     volumes:
-      - ./wilders:/app
-      - /app/node_modules
+      - ./wilders/src:/app/src
   skills:
     build:
       context: ./skills
     volumes:
-      - ./skills:/app
-      - /app/node_modules
+      - ./skills/src:/app/src
