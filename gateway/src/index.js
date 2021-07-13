@@ -39,10 +39,6 @@ app.post("/wilder", async (req, res) => {
 
         console.log(" [x] Sent %s", req.body);
       });
-      setTimeout(function () {
-        connection.close();
-        process.exit(0);
-      }, 500);
     });
 
     res.send("sent to queue");

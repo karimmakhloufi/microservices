@@ -5,43 +5,52 @@ const port = 5000;
 
 app.use(express.json());
 
-var amqp = require("amqplib/callback_api");
-
-amqp.connect("amqp://queue", function (error0, connection) {
-  if (error0) {
-    throw error0;
-  }
-  connection.createChannel(function (error1, channel) {
-    if (error1) {
-      throw error1;
-    }
-
-    var queue = "wilder";
-
-    channel.assertQueue(queue, {
-      durable: false,
-    });
-
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-
-    channel.consume(
-      queue,
-      function (msg) {
-        console.log(" [x] Received %s", JSON.parse(msg.content));
-      },
-      {
-        noAck: true,
-      }
-    );
-  });
-});
-
 const wilders = [
   {
     name: "Karim",
     role: "Instructor",
   },
 ];
+
+var amqp = require("amqplib/callback_api");
+
+const connectAMQP = () => {
+  amqp.connect("amqp://queue", function (error0, connection) {
+    if (error0) {
+      console.log(error0);
+      return setTimeout(connectAMQP, 1000);
+    }
+    connection.createChannel(function (error1, channel) {
+      if (error1) {
+        throw error1;
+      }
+
+      var queue = "wilder";
+
+      channel.assertQueue(queue, {
+        durable: false,
+      });
+
+      console.log(
+        " [*] Waiting for messages in %s. To exit press CTRL+C",
+        queue
+      );
+
+      channel.consume(
+        queue,
+        function (msg) {
+          console.log(" [x] Received %s", JSON.parse(msg.content));
+          wilders.push(JSON.parse(msg.content));
+        },
+        {
+          noAck: true,
+        }
+      );
+    });
+  });
+};
+
+connectAMQP();
 
 app.get("/wilders", async (req, res) => {
   let skills;
