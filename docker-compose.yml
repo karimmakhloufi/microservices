@@ -2,7 +2,6 @@ services:
   queue:
     image: rabbitmq:3.9-rc-management-alpine
     ports:
-      - 5672:5672
       - 15672:15672
     volumes:
       - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
